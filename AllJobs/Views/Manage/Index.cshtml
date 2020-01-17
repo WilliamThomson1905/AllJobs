@@ -1,0 +1,321 @@
+﻿
+@model AllJobs.Models.ProfileViewModel
+
+
+@{
+    ViewBag.Title = "My Profile";
+}
+
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- This view display all the information relating to the current user. Regardless of account type -->
+
+
+<link href="~/Content/Job2 CSS/J2-style-Copy.css" rel="stylesheet" />
+<link href="~/Content/custom.css" rel="stylesheet" />
+
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 page-sidebar">
+
+
+
+                <aside>
+                    <div class="inner-box">
+                        <div class="user-panel-sidebar">
+
+
+
+
+                            <!-- /.collapse-box  -->
+                            <div class="collapse-box">
+                                <h5 class="collapse-title no-border">
+                                    My Account <a href="#MyAds" data-toggle="collapse"
+                                              class="pull-right">
+                                        <i class="fa fa-angle-down"></i>
+                                    </a>
+                                </h5>
+
+                                <div class="panel-collapse collapse in" id="MyAds">
+                                    <ul class="acc-list">
+                                        @if (User.IsInRole("Applicant"))
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Index", "CVs")">My CVs  <span class="badge">@ViewBag.CVsCount</span></a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("Index", "Qualifications")">My Qualifications  <span class="badge">@ViewBag.QualsCount</span></a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "JobHistories")">Job History  <span class="badge">@ViewBag.PastJobsCount</span></a>
+                                            </li>
+                                        }
+                                        @if (User.Identity.IsAuthenticated && !User.IsInRole("Applicant"))
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("MyDashboard", "Advertisements")">My Ads  <span class="badge">@ViewBag.JobsCount</span></a>
+                                            </li>
+                                         
+                                        }
+                                       
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- /.collapse-box  -->
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <!-- /.inner-box  -->
+
+                </aside>
+
+
+
+
+            </div>
+            <!--/.page-sidebar-->
+
+
+            <div class="col-sm-9 page-content">
+                <div class="inner-box">
+                    <div class="row">
+                        <div class="col-md-5 col-xs-4 col-xxs-12">
+                            <hr />
+                            <h3 class="no-padding text-center-480 useradmin">
+
+                                @Model.Forename @Model.Surname
+
+                                @if (Model.Forename == null && Model.Surname == null) { <span>Why not update your proile?</span> }
+                            </h3>
+                            <hr />
+
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+
+
+                <div class="inner-box">
+                    <div class="welcome-msg">
+                        <h4 class="page-sub-header2 clearfix no-padding">Manage Account</h4>
+                        <span class="text-success">@ViewBag.StatusMessage</span>
+
+                    </div>
+
+
+                    <div id="accordion" class="panel-group">
+                        <div class="panel panel-default">
+
+                            <div class="panel-heading" style="background: #fafafa;">
+                                <h4 class="panel-title">
+                                    <a href="#collapseB1" data-toggle="collapse">
+                                        My Details
+                                    </a>
+                                </h4>
+                            </div>
+
+
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+                                
+                                <div class="form-horizontal">
+
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    @Html.HiddenFor(model => model.Id)
+                                    @Html.HiddenFor(model => model.Email)
+
+
+
+
+                                    @Html.HiddenFor(model => model.CV_FileUpload)
+
+
+
+
+
+
+
+
+                                    <div class="panel-collapse collapse in" id="collapseB1">
+                                        <div class="panel-body">
+                                            <form class="form-horizontal" role="form">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-sm-9">
+                                                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Forename, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-sm-9">
+                                                        @Html.EditorFor(model => model.Forename, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Forename, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-sm-9">
+                                                        @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-sm-9">
+                                                        @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-sm-9">
+                                                        @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control", } })
+                                                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-sm-9">
+                                                        @Html.DisplayFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-sm-9">
+                                                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+
+                                                @if (User.IsInRole("Applicant"))
+                                                {
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                        <div class="col-sm-9">
+                                                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                        <div class="col-sm-9">
+                                                            @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.PostCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                        <div class="col-sm-9">
+                                                            @Html.EditorFor(model => model.PostCode, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.PostCode, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                        <div class="col-sm-9">
+                                                            @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+
+
+                                                }
+
+
+
+                                                <div class="form-group">
+                                                    <div class="col-md-offset-2 col-md-10">
+
+
+                                                        <input type="submit" value="Update" class="btn btn-primary" onclick = "return confirm('Are you sure you wish to Update your Account?');" />
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="background: #fafafa;">
+                                <h4 class="panel-title">
+                                    <a href="#collapseB2" data-toggle="collapse"> Settings </a>
+                                </h4>
+                            </div>
+                            <div class="panel-collapse collapse" id="collapseB2">
+                                <div class="panel-body">
+
+                                    <h4>Change your account settings</h4>
+                                    <hr />
+
+
+
+                                    <div class="form-group">
+
+
+                                        @Html.Label("Password", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            [
+                                            @if (Model.HasPassword)
+                                            {
+                                                @Html.ActionLink("Change your password", "ChangePassword", "Manage")
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink("Create", "SetPassword")
+                                            }
+                                            ]
+
+                                        </div>
+                                    </div>
+
+                                        
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!--/.row-box End-->
+
+                </div>
+            </div>
+            <!--/.page-content-->
+        </div>
+        <!--/.row-->
+    </div>
+    <!--/.container-->
+</section>
+<!-- /.main-container -->

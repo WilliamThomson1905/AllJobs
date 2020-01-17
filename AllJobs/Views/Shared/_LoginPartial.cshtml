@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNet.Identity
+
+
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+            @if (User.IsInRole("Applicant"))
+            {
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle">My Profile<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Profile", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+
+
+                    <li>@Html.ActionLink("My CV's", "Index", "CVs")</li>
+                    <li>@Html.ActionLink("Qualifications", "Index", "Qualifications")</li>
+                    <li>@Html.ActionLink("Job History", "Index", "JobHistories")</li>
+
+
+                </ul>
+            }
+        </li>
+        @if (!User.IsInRole("Applicant"))
+        {
+            <li>@Html.ActionLink("Profile", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+        }
+        
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    }
+}
+else
+{
+                @*</ul><a href="#" data-toggle="modal" data-target="#login-modal" 
+                    class="btn navbar-btn btn-white"><i class="fa fa-sign-in"></i>Log in</a>*@                 
+
+    @*<ul class="nav navbar-nav navbar-right">*@
+
+
+        @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn navbar-btn btn-white" })
+        <i> </i>
+        @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn navbar-btn btn-white" })
+    @*</ul>*@
+}

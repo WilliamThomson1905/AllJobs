@@ -1,0 +1,221 @@
+﻿@model  AllJobs.Models.Advertisement
+@using AllJobs.Models
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "Job Details";
+}
+
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- This view displys all the detais for the selected advertisement -->
+
+
+<link href="~/Content/custom.css" rel="stylesheet" />
+<link href="~/Content/Job2 CSS/J2-style-Copy.css" rel="stylesheet" />
+
+
+
+<section>
+    <div class="main-container">
+        <div class="container">
+            <ol class="breadcrumb pull-left">
+                <li><a href="#"><i class="icon-home fa"></i></a></li>
+                <li>@Html.RouteLink("Jobs", "BrowseJobs", new { SearchFilter = "Search by Profession", DatePosted = 0, JobTypeName = "All", pay = 0, LocationName = "All Locations" })</li>
+                <li class="active">@Model.Sector.SectorName</li>
+            </ol>
+            <br /> <br />
+
+         
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9 page-content col-thin-right">
+                    <div class="inner inner-box ads-details-wrapper">
+                        <h5>@Model.JobTitle</h5>
+                        <span class="info-row">
+                            <span class="date"><i class="icon-clock"> </i> Posted: @Model.DateCreated.ToShortDateString() </span> - <span class=""> @Model.JobType.JobTypeName </span> - <span class="item-location">
+                                <i class="fa fa-map-marker"></i> @Model.Location.LocationName
+                            </span>
+                        </span>
+
+                        <div class="Ads-Details ">
+                            <div class="row">
+                                <div class="ads-details-info jobs-details-info col-md-8">
+                                    <p>
+                                        @Model.Description
+                                    </p>
+
+                                    @if (Model.JobResponsibilites != null)
+                                    {
+                                        <h5 class="text-uppercase ">Duties &amp; Responsibilities:</h5>
+                                        <p>@Model.JobResponsibilites</p>
+                                    }
+                                    
+                                    @if (Model.QualificationRequired != null)
+                                    {
+                                        <h5 class="text-uppercase ">Skills &amp; Qualifications:</h5>
+                                        <p>@Model.QualificationRequired</p>                                  
+                                    }
+                                    @if (Model.TechnicalExperience != null)
+                                    {
+                                        <h5 class="text-uppercase">Preferred Technical Experience:</h5>
+                                        <p>@Model.TechnicalExperience</p>
+                                    }
+                                    @if (Model.OtherDetails != null)
+                                    {
+                                        <h5 class="text-uppercase">Other:</h5>
+                                        <p>@Model.OtherDetails</p>
+                                    }
+
+
+
+                                    @*<p>
+                                        If you are looking for a great career opportunity with a company experiencing
+                                        growth, apply online today.&#8203;
+                                    </p>*@
+
+                                    
+                                        
+                                    <p class="text-muted"><cite>Applicant must enclose their CV.</cite>
+                                        @if (Model.CoverLetterRequired)
+                                        {
+                                            <br />
+                                            <cite>Applicant must Provide a Cover Letter.</cite>
+                                        }
+                                    </p>
+
+
+
+                                </div>
+                                <div class="col-md-4">
+                                    <aside class="panel panel-body panel-details job-summery">
+                                        <ul>
+
+                                            <li><p class="no-margin"><strong>Industry:</strong> @Model.Sector.SectorName </p></li>
+                                            <li><p class="no-margin"><strong>Start Date:</strong> @Model.AvailableFrom.ToShortDateString() </p></li>
+
+                                            <li><p class="no-margin"><strong>Closing Date:</strong> @Model.ClosingDate.ToShortDateString() </p></li>
+                                            <li>
+                                                <p class="no-margin"><strong>Company:</strong> @Model.CompanyName </p>
+                                            </li>
+                                            <li>
+                                                <p class="no-margin"><strong>Salary:</strong> £@Model.MinSalary - £@Model.MaxSalary </p>
+                                            </li>
+                                            <li>
+                                                <p class="no-margin"><strong>Work type:</strong> @Model.JobType.JobTypeName </p>
+                                            </li>
+                                            <li>
+                                                <p class="no-margin"><strong>Location:</strong> @Model.Location.LocationName </p>
+                                            </li>
+
+
+                                        </ul>
+                                    </aside>
+                                    @*<div class="ads-action">
+                                        <ul class="list-border">
+                                            <li><a href="#"> <i class="fa icon-mail"></i> Email job</a></li>
+                                            <li>
+                                                <a href="#" data-toggle="modal"> <i class="fa icon-print"></i> Print job </a>
+                                            </li>
+                                            <li><a href="#"> <i class="fa fa-heart"></i> Save job</a></li>
+                                            <li><a href="#"> <i class="fa fa-share-alt"></i> Share job</a></li>
+
+                                        </ul>
+                                    </div>*@
+                                </div>
+                            </div>
+                            <div class="content-footer text-left">
+
+                                @*@if (User.Identity.GetUserId() != Model.EmployerId)*@
+                                @if (User.IsInRole("Applicant") || !User.Identity.IsAuthenticated)
+                                {
+                                    @Html.ActionLink("Apply Now", "ApplyToJob", new { Id = Model.AdvertisementId }, new { @class = "btn  btn-default" })
+                                }
+                                @if (User.Identity.GetUserId() == Model.EmployerId || User.IsInRole("Administrator"))
+                                {
+                                    @Html.ActionLink("Applicants - " + Model.Applicants.Count(), "Applicants", "Advertisements", new { AdvertisementId = Model.AdvertisementId }, new { @class = "btn  btn-default" })
+
+                                    @Html.ActionLink("Edit", "Edit", new { AdvertisementId = Model.AdvertisementId }, new { @class = "btn  btn-default" })
+                                    @Html.ActionLink("Delete", "Delete", new { AdvertisementId = Model.AdvertisementId }, new { @class = "btn  btn-default" })
+                                }
+
+                                @*<a href="#applyJob" data-toggle="modal" class="btn  btn-primary">
+                                    <i class="icon-mail-2"></i> Apply Online
+                                </a>*@
+
+                                @if (Model.Employer != null)
+                                {
+                                    <small>@Model.Employer.Email</small>
+                                }
+                                @*else if(this.User.IsInRole(RoleNames.ROLE_ADMINISTRATOR))
+                                {
+                                    <small>@Model.Employer.Email</small>
+                                }*@
+
+
+
+
+                                @*<small>@Model.Employer.Email</small>*@
+                            </div>
+                        </div>
+                    </div>
+                    <!--/.ads-details-wrapper-->
+
+                </div>
+                <!--/.page-content-->
+
+                <div class="col-sm-3  page-sidebar-right">
+                    <aside>
+                        <div class="panel sidebar-panel panel-contact-seller">
+                            <div class="panel-heading">Company Information</div>
+                            <div class="panel-content user-info">
+                                <div class="panel-body text-center">
+                                    <div class="seller-info">
+                                        @*<div class="company-logo-thumb">
+                                            <a>
+                                                <img alt="img" class="img-responsive img-circle"
+                                                     src="images/jobs/company-logos/17.jpg">
+                                            </a>
+                                        </div>*@
+                                        <h5 class="no-margin"> @Model.CompanyName </h5>
+
+                                        <p>Location: <strong> @Model.Location.LocationName </strong></p>
+                                        @if (Model.Website != null)
+                                        {
+                                            <p> Web: <strong> @Model.Website </strong></p>
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="panel sidebar-panel">
+                            <div class="panel-heading"><i class="icon-lamp"></i> Successful CV Tips</div>
+                            <div class="panel-content">
+                                <div class="panel-body text-left">
+                                    <ul> <!-- class="list-check"-->
+                                        <li>Tailor a CV to a specific job</li>
+                                        <li>Keep it simple</li>
+                                        <li>Include key information - personal details</li>
+                                        <li>Showcase achievements</li>
+                                    </ul>
+                                    @*<p>
+                                        <a class="pull-right" href="#">
+                                            Know more <i class="fa fa-angle-double-right"></i>
+                                        </a>
+                                    </p>*@
+                                </div>
+                            </div>
+                        </div>
+                        <!--/.categories-list-->
+                    </aside>
+                </div>
+                <!--/.page-side-bar-->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /.main-container -->

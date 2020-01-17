@@ -1,0 +1,123 @@
+﻿@using AllJobs.Models;
+@model PagedList.IPagedList<AllJobs.Models.ExpandedUserDTO>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- Allows for the viewing of all users of the system -->
+
+
+
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                @*<br />*@
+                <p>
+                    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Edit Roles", "ViewAllRoles", null, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Back to Home", "../", "Home", null, new { @class = "btn btn-default" })
+                </p>
+                <br />
+                @using (Html.BeginForm("Index", "Admin", FormMethod.Get))
+                {
+
+                    <div class="form-group">
+                        &nbsp; @Html.TextBox("searchStringUserNameOrEmail", ViewBag.CurrentFilter as string, new { placeholder = "Search..." })
+                        
+                       
+                        @*<a href="@Url.Action()" class="btn btn-primary job-main-form__button"><i class="fa fa-search"></i></a>*@
+
+                        <input type="submit" value="Search" />
+                    </div>
+                }
+                <br />
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                PhoneNumber
+                            </th>
+
+
+                            <th>
+                                Account Status
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            int num = -1;
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                </td>
+
+
+                                <td>
+
+                                    <!-- Determine if userhas been suspended -->
+                                    @foreach (UserRolesDTO user in item.Roles)
+                                    {
+                                        if (user.RoleName.Equals("Suspended")) { num = 1; }
+                                    }
+
+                                    @if (num == 1)
+                                    { <span>Suspended</span> }
+                                    else if (num == -1)
+                                    { <span>Active</span> }
+
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "EditUser", new { UserName = item.UserName }) |
+                                    @if ((item.UserName.ToLower() != this.User.Identity.Name.ToLower()))
+                                    {
+                                        @Html.ActionLink("Delete", "DeleteUser", new { UserName = item.UserName },
+                                        new { onclick = "return confirm('Are you sure you wish to delete this user?');" })
+
+                                    }
+                                </td>
+                            </tr>
+                        }
+
+
+                    </table>
+
+                </div>
+                <br />
+
+                <!-- Declaration of pagination for user accounts -->
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("Index", new
+                {
+                    page,
+                    searchStringUserNameOrEmail = ViewBag.searchStringUserNameOrEmail,
+                    currentFilter = ViewBag.CurrentFilter
+                }))
+
+                <hr />
+            </div>
+
+
+        </div>
+
+
+         
+    </div>
+</section>

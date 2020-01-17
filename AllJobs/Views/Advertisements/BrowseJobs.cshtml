@@ -1,0 +1,232 @@
+﻿@model PagedList.IPagedList<AllJobs.Models.Advertisement>
+@using PagedList.Mvc;
+@*model AllJobs.Models.AdvertisementListViewModel*@
+
+@{
+    ViewBag.Title = "Browse Jobs";
+}
+
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- The browse jobs view will display all the advertisements on the system that are public and not filled -->
+
+
+<!-- Job 2 -->
+@*<link href="~/Content/Job2 CSS/bootstrap-select.css" rel="stylesheet" />*@
+<link href="~/Content/Job2 CSS/J2-style-Copy.css" rel="stylesheet" />
+<!-- /Job 2 -->
+
+
+<section class="job-form-section job-form-section--compressed">
+    <div class="container">
+        <div class="breadcrumbs">
+            <ul class="breadcrumb">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>Jobs in @ViewBag.LocationName</li>
+            </ul>
+        </div>
+        <h4 class="heading">Find a <span class="accent">Job</span> you will <span class="accent">Love</span>.</h4>
+        <div class="controls">
+            <div class="row">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<span></span>
+
+
+@*<div class="main-container">*@
+<section>
+    <div class="container">
+        <div class="row">
+            
+
+            
+            
+            <!-- this (.mobile-filter-sidebar) part will be position fixed in mobile version -->
+            
+            <!-- As this view was becoming cumbersome I seperated it into two: this view and a partial view. -->
+            @Html.Partial("_BrowseFilterPartial")
+
+            <!------------------------/.page-side-bar--------------------------->
+
+
+
+
+            <div class="col-sm-9 page-content col-thin-left">
+
+                <div class="category-list">
+                    <div class="tab-box clearfix ">
+
+
+                        <!-- Nav tabs -->
+                        <div class="col-lg-12  box-title no-border">
+                            <div class="inner">
+                                <h2>
+                                    <span>@ViewBag.FilteredJobsCount</span><small> Jobs Found</small> in <span>@ViewBag.LocationName</span>
+                                </h2>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Filter bar -->
+                        <div class="mobile-filter-bar col-lg-12  ">
+                            <ul class="list-unstyled list-inline no-margin no-padding">
+                                <li class="filter-toggle">
+                                    <a class="">
+                                        <i class="icon-th-list"></i>
+                                        Filters
+                                    </a>
+                                </li>                                
+                            </ul>
+                        </div>
+
+                        <!--/.tab-filter-->
+
+                    </div>
+                    <!--/.tab-box-->
+
+                    <div class="listing-filter hidden-xs">
+                        <div class="pull-left col-sm-6 col-xs-12">
+                            <div class="breadcrumb-list text-center-xs">
+                            </div>
+                        </div>
+
+
+                        @using (Html.BeginForm("BrowseJobs", "Advertisements", FormMethod.Get))
+                        {
+
+                            <div class="pull-right col-sm-6 col-xs-12 text-right text-center-xs listing-view-action">
+                                @Html.ActionLink("View All", "BrowseJobs", "Advertisements", new { SearchFilter = "Search by Profession", DatePosted = 0, JobTypeName = "All",  pay = 0,  LocationName = "All Locations" }, new { @class = "btn btn-default" })
+                            </div>
+
+                        }
+
+                        <div style="clear:both"></div>
+                    </div>
+                    <!--/.listing-filter-->
+
+
+
+
+
+
+                    <!-- /////  This would initially be displayed using "AdvertiementViewModel.cshtml". Had to compartmentalise to implement pagination  //////-->
+
+                    <div class="adds-wrapper jobs-list">
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="item-list job-item">
+
+                                <div class="col-sm-10  col-xs-10  add-desc-box">
+                                    <div class="add-details jobs-item">
+                                        <h5 class="company-title ">@Html.ActionLink(item.CompanyName, "JobDetails", "Advertisements", new { Id = item.AdvertisementId }, new { @class = "company-title" })</h5>
+                                        <h4 class="job-title">
+                                            @Html.ActionLink(item.JobTitle, "JobDetails", "Advertisements", new { Id = item.AdvertisementId }, new { @class = "company-title" })
+
+                                        </h4>
+
+
+                                        <span class="info-row">
+                                            <span class="item-location">
+                                                <i class="fa fa-map-marker"></i> @item.Location.LocationName /
+                                            </span>
+                                            <span class="date">
+                                                <i class="icon-clock"></i> @item.JobType.JobTypeName /
+                                            </span><span class="salary">
+                                                <i class="icon-money"></i> @item.MaxSalary per Annum
+                                            </span>
+                                        </span>
+
+                                        <div class="jobs-desc">
+                                            @item.ShortDescription
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                                <!--/.add-desc-box-->
+                                <!--/.add-desc-box-->
+                            </div>
+                            <!--/.job-item-->
+                        }
+
+                    </div>
+                    <!--/.adds-wrapper-->
+
+                </div>
+
+                <!-- Implementing of Pagination -->
+                <br />
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("BrowseJobs",
+               new { page, SearchFilter = ViewBag.SearchFilter, DatePosted = ViewBag.DatePosted, JobTypeName = ViewBag.JobTypeName, pay = ViewBag.pay, LocationName = ViewBag.LocationName }))
+                <!--/.pagination-bar -->
+
+
+                
+
+            </div>
+            <!--/.page-content-->
+
+        </div>
+    </div>
+</section>
+
+
+@if (User.IsInRole("Applicant"))
+{
+    <section style="background: #fafafa;">
+        <div class="post-promo text-center">
+            <h4> Looking for a Job? </h4>
+            <h5> Upload a CV and easily apply to jobs from any device! </h5>
+            @Html.RouteLink("Upload your CV", "MyCVs", null, new { @class = "btn btn-primary" })
+        </div>
+        <!--/.post-promo-->
+    </section>
+    <!-- /.main-container -->
+}
+
+
+
+
+<!-- /.wrapper -->
+
+
+
+
+
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- include carousel slider plugin  -->
+<script src="assets/js/owl.carousel.min.js"></script>
+
+<!-- include equal height plugin  -->
+<script src="assets/js/jquery.matchHeight-min.js"></script>
+
+<!-- include jquery list shorting plugin plugin  -->
+<script src="assets/js/hideMaxListItem.js"></script>
+
+<!-- include jquery.fs plugin for custom scroller and selecter  -->
+<script src="assets/plugins/jquery.fs.scroller/jquery.fs.scroller.js"></script>
+
+
+@*<link href="~/Scripts/J2/jquery.fs.selecter.css" rel="stylesheet" />*@
+
+
+
+<script src="~/Scripts/J2/jquery-1.10.2.min.js"></script>
+
+
+
+
+

@@ -1,0 +1,90 @@
+﻿@model AllJobs.Models.Qualification
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+
+
+
+                <div>
+                    <h4>Are you sure you want to delete this Qualification?</h4>
+                    <p class="text-muted">If you Delete ths Qualification it will be removed from all corresponding CVs.</p>
+
+                    <hr />
+                    <dl class="dl-horizontal">
+                       
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.QualificationName)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.QualificationName)
+                        </dd>
+
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Level)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Level)
+                        </dd>
+
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.StartDate)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.StartDate)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.EndDate)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.EndDate)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Grade)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Grade)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.InstitutionName)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.InstitutionName)
+                        </dd>
+
+                    </dl>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Delete" class="btn btn-default" onclick = "return confirm('Are you sure you wish to Delete this Qualification? It will be removed from all corresponding CVs.');"/>
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+                        </div>
+                    }
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>

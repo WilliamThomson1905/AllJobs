@@ -1,0 +1,232 @@
+﻿@using AllJobs.Models;
+@model ApplicantsForAdvertisementViewModel
+
+@{
+    ViewBag.Title = "Applicants";
+
+    // This 'i' is a counter that will be incremented by one for each applicant applied to this advertisement.
+    // It will be used for looping through each "modal-title" and giving it a unique identifier/value.
+    int i = 1;
+}
+
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- This view is used by employers to view all the applicants that have applied to a job vacancy. 
+    It also presents the employer with options to contact the applicant as well as view their cv and coverletter -->
+
+
+
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>Applicants</li>
+                    </ul>
+                </div>
+                <h3 class="heading">Applicants for the <span class="accent">@Model.Advertisement.JobTitle</span> position</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+
+            
+
+            @foreach (Applicant applicant in Model.Applicants)
+            {
+
+
+
+                    <div class="col-md-6">
+                        <div class="box applicant" >
+                                                       
+                            <div> <!-- id="tab5-2" class="tab-pane fade"-->
+                                        
+                                @using (Html.BeginForm("EmailApplicant", "Advertisements", FormMethod.Post))
+                                {
+
+
+                                <!-- ///////////////////////////////////////////////////////////////////////// 222-->
+                                    <!-- *** CONTACT MODAL ***_________________________________________________________  -->
+                                    
+                                    <div class="modal-header">
+                                        <h4 id="Login" class="modal-title">Contact @applicant.Forename @applicant.Surname</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Subject" class="form-control" name="subject">
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea placeholder="Your Message" class="form-control" name="contactMessage"></textarea>
+                                        </div>
+                                        <p class="text-center">
+                                            <input type="hidden" class="form-control" name="applicantEmail" value=@applicant.Email>
+                                            <input type="hidden" class="form-control" name="advertisementId" value=@Model.Advertisement.AdvertisementId>
+
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-envelope"></i> Send</button>
+                                        </p>
+                                        <p class="text-center text-muted text-small">Some explanatory text.  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. </p>
+                                    </div>
+                                            
+                                    
+                                }
+                            </div> 
+                            <!-- End of Contact Section -->
+
+
+
+                            
+
+                             @if (Model.Advertisement.CoverLetterRequired)
+                             {
+                                <hr />
+
+
+                                <div class="collapse-box">
+                                    <h4 class="modal-title collapsed">@applicant.Forename - Cover letter<a href=#@i data-toggle="collapse" class="pull-right"> <i class="fa fa-angle-down"></i></a></h4>
+
+                                    <div class="panel-collapse collapse out" id=@i>                                        
+                                        <div>
+                                            @*<div id="coverletter-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true" class="modal fade">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">*@
+                                                    @*<div class="modal-header">
+                                                        @*<button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>*
+                                                        <h4 class="modal-title">@applicant.Forename - Cover letter</h4>
+                                                    </div>*@
+                                                    <div class="modal-body">
+                                                        @*@Model.Advertisement.CoverLetter*@
+                                                        <br />
+                                                        
+                                                        @foreach (Application coverLetter in @ViewBag.Applicationss)
+                                                        {
+
+                                                            if (coverLetter.Id == applicant.Id)
+                                                            {
+                                                                @coverLetter.CoverLetter
+                                                                break;
+                                                            }
+                                                        }
+                                                    </div>
+                                                    @*</div>
+                                                </div>
+                                            </div>*@
+                                            
+                                        </div>
+                                        
+                                        @{i++;}
+                                        
+                                    </div>
+                                </div>
+
+                             }
+
+
+                            <br /> <br /> <br /> <hr />
+
+                            @if (true)
+                            {
+
+                                <div class="collapse-box">
+                                    <h4 class="modal-title collapsed">@applicant.Forename - CV <a href=#@i data-toggle="collapse" class="pull-right"> <i class="fa fa-angle-down"></i></a></h4>
+                                    <div class="panel-collapse collapse out" id=@i>
+
+                                        <div>
+
+                                            @*<div id="coverletter-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true" class="modal fade">*@
+                                                    @*<div class="modal-dialog">*@
+                                                        
+                                                      
+                                                        <div class="modal-body">
+                                                            <br />
+
+                                                            @foreach (Application application in @ViewBag.Applications)
+                                                            {
+                                                                if (application.Id == applicant.Id)
+                                                                {
+
+
+
+                                                                    if (application.CV_Id == null)
+                                                                    {
+                                                                        <div class="text-center">
+                                                                            <label for="option3"><span><span></span></span><img src="@applicant.CV_FileUpload.Substring(81)" width="250" height="350" object-fit contain></label>
+                                                                        </div>
+                                                                        //applicationCV_Id = true;
+                                                                        break;
+                                                                    }
+                                                                    else
+                                                                    {
+
+                                                                        <div class="col-lg-12 text-center margin-bottom--big">
+
+                                                                            @Html.RouteLink("View CV", "CV_Details", new { id = application.CV_Id }, new { @class = "btn btn-default btn-sm" })
+                                                                        </div>
+
+                                                                        break;
+                                                                    }
+
+
+                                                                    
+
+                                                                }
+
+                                                            }
+
+
+                                                            @{i++;}
+
+
+                                                        </div>
+                                            
+                                                    @*</div>
+                                                </div>*@
+                                            </div>
+
+
+
+
+                                       
+
+                                    </div>
+                                </div>
+                            }
+
+                            @foreach (Application application in @ViewBag.Applications)
+                            {
+                                if (application.Id == applicant.Id)
+                                {
+                                    <br /> <br /> <br /> <hr />
+
+                                    <p>
+                                        <span class="label label-info">Applied @application.DateApplied</span>
+                                    </p>
+
+
+                                }
+                            }
+                        </div>
+                    </div>
+
+
+
+                
+
+
+                    
+
+                }
+
+            </div>
+    </div>
+</section>
+
+

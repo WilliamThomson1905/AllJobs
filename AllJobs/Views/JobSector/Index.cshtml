@@ -1,0 +1,39 @@
+﻿@model IEnumerable<AllJobs.Models.JobSectorCategory>
+
+@{
+    ViewBag.Title = "Index";
+}
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10">
+                <h4>Manage Job Sectors</h4>
+                <br />
+                <p>
+                    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-default" })
+                </p>
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SectorName)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SectorName)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.JobSectorCategoryId }) 
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

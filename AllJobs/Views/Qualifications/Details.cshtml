@@ -1,0 +1,76 @@
+﻿@model AllJobs.Models.Qualification
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+            <div>
+                <h4>Qualification Details</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                   
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.QualificationName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.QualificationName)
+                    </dd>
+
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Level)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Level)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.StartDate)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.EndDate)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Grade)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Grade)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.InstitutionName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.InstitutionName)
+                    </dd>
+
+                </dl>
+            </div>
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Qualification_Id }, new { @class = "btn btn-default"})
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+            </p>
+        </div>
+    </div>
+     
+</section>

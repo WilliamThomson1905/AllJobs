@@ -1,0 +1,36 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+
+@{
+    ViewBag.Title = "Your Account has Been Suspended! ";
+    Layout = null
+}
+
+
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- If the users account has been locked by an administrator or manager they will be redirected to this view -->
+
+
+
+<link rel="stylesheet" href="~/Content/style.default.css" id="theme-stylesheet">
+<link rel="stylesheet" href="~/Content/bootstrap.min.css">
+<link rel="stylesheet" href="~/Content/font-awesome.min.css">
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box text-center">
+                    <h2>@ViewBag.Title</h2>
+                    <div>
+                        <p>
+                            Please try again at a later date. We apologise for any inconveniences.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,104 @@
+﻿@using AllJobs.Models;
+@model AllJobs.Models.ExpandedUserDTO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- Allows admin to edit user details: email and password. Also allows for susending and unsuspending of users -->
+
+
+
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+            <div class="form-horizontal">
+                <h4>Edit User</h4>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    int userStatus = 0;
+
+
+                    if ((Model.UserName.ToLower() != this.User.Identity.Name.ToLower()))
+                    {
+                        foreach (UserRolesDTO role in Model.Roles)
+                        {
+                            if (role.RoleName.Equals("Suspended"))
+                            {
+
+                                userStatus = 1;
+                            }
+                        }
+
+
+                        <!-- User isInRole Suspended - display appropriate button -->
+                        if (userStatus == 1)
+                        {
+                            @Html.ActionLink("Unsuspend User", "UnsuspendUser", "Admin", new { UserName = Model.UserName },
+                                             new { onclick = "return confirm('Are you sure you wish to Unsuspend this user?');" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Suspend User", "SuspendUser", "Admin", new { UserName = Model.UserName },
+                                             new { onclick = "return confirm('Are you sure you wish to Suspend this user?');" })
+
+                        }
+                        <span> | </span>
+
+                        @Html.ActionLink("Delete", "DeleteUser", new { UserName = Model.UserName },
+                                    new { onclick = "return confirm('Are you sure you wish to delete this user?');" })
+
+                    }
+
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+         
+
+                    <div class="form-grop">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                            @*@Html.ActionLink("Edit Roles", "EditRoles", new { UserName = Model.UserName }, new { @class = "btn btn-default" })*@
+
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+                        </div>
+                    </div>
+
+                }
+            </div>
+
+        </div>
+    </div>
+</section>

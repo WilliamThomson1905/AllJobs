@@ -1,0 +1,128 @@
+﻿@model IEnumerable<AllJobs.Models.AdvertisementViewModel>
+
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- Displays all advertisements on the system regardless if te advertisement is public or the position is filled -->
+
+<link href="~/Content/Job2 CSS/J2-style-Copy.css" rel="stylesheet" />
+
+
+
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>Client dashboard</li>
+                    </ul>
+                </div>
+                <h1 class="heading">@ViewBag.EmployerName Dashboard</h1>
+                <p class="lead text-center">Welcome to your Dashboard! Feel free to manage all the Job Advertisements that you have created. </p>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-12 text-center margin-bottom--big">
+                @Html.ActionLink("Add New Position", "PostNewJob", "Advertisements", new { @class = "btn btn-primary"})
+            </div>
+
+            <div class="col-lg-12">
+
+
+
+                <div class="adds-wrapper jobs-list">
+
+
+                    @foreach (var item in Model)
+                    {
+
+
+                        <div class="item-list job-item">
+
+                            <div class="col-sm-10  col-xs-10  add-desc-box">
+                                <div class="add-details jobs-item">
+                                    <h5 class="company-title ">@Html.ActionLink(item.CompanyName, "JobDetails", "Advertisements", new { Id = item.AdvertisementId }, new { @class = "company-title" })</h5>
+                                    <h4 class="job-title">@Html.ActionLink(item.JobTitle, "JobDetails", "Advertisements", new { Id = item.AdvertisementId }, new { @class = "company-title" })
+                                              
+                                    <!--Request.IsAuthenticated && !User.IsInRole("Applicant") && -->
+                                            @if (item.Employer.Email.Equals(User.Identity.Name))
+                                            { <span>-</span> @item.Applicants.Count() <span>Applicants</span> } </h4>
+
+
+                                    <span class="info-row">
+                                        <span class="item-location">
+                                            <i class="fa fa-map-marker"></i> @item.Location.LocationName /
+                                        </span>
+                                        <span class="date">
+                                            <i class="icon-clock"></i> @item.JobType.JobTypeName /
+                                        </span>
+                                        <span class="salary">
+                                            <i class="icon-money"></i> @item.MaxSalary per Annum /
+                                        </span>
+                                        @if (item.IsPublic)
+                                        {
+                                            <span class="salary">
+                                                <i class="icon-money"></i><strong>Ad is Public</strong>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="salary">
+                                                <i class="icon-money"></i> <strong>Ad is Not Publc</strong>
+                                            </span>
+                                        }
+
+                                        @if (item.IsPositionFilled)
+                                        {
+                                            <span class="salary">
+                                                <i class="icon-money"></i><strong>Position Filled</strong>
+                                            </span>
+                                        }
+                                      
+
+                                    </span>
+
+                                    <div class="jobs-desc">
+                                        @item.ShortDescription
+                                    </div>
+
+
+                                        
+
+
+                                </div>
+                            </div>
+                            <!--/.add-desc-box-->
+                        </div>
+                        <!--/.job-item-->
+
+
+                    }
+
+
+
+                </div>
+                <!--/.adds-wrapper-->                
+            </div>
+
+            <br /><br />
+            <div class="col-lg-12 text-center margin-bottom--big">
+                @Html.ActionLink("Back to Top", "MyDashboard", "Advertisements", new { @class = "btn btn-primary" })
+            </div>
+
+            <br /><br /><br /><br />
+          
+        </div>
+    </div>
+</section>

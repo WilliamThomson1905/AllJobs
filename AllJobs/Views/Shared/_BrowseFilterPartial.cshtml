@@ -1,0 +1,222 @@
+﻿
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- This is a partial view that contains the filter feature on the browse jobs view.  -->
+
+
+
+
+<!-- this (.mobile-filter-sidebar) part will be position fixed in mobile version -->
+<div class="col-sm-3 page-sidebar mobile-filter-sidebar">
+    <aside>
+        <div class="inner-box">
+
+
+
+
+
+
+            @using (Html.BeginForm("BrowseJobs", "Advertisements", FormMethod.Get))
+            {
+
+               
+
+
+                <div class="list-filter">
+                    <h4><span class="accent"><small>Refined Search</small></span></h4>
+                    <div class="filter-date filter-content">
+
+                        <input type="text" id="SearchFilter" value="Search by Profession" name="searchFilter" class="form-control">
+
+                    </div>
+                </div>
+
+                <br />
+
+
+
+                <div class="list-filter">
+                    <h4><span class="accent"><small>Date Posted</small></span></h4>
+
+                    <div class="filter-date filter-content">
+                        
+
+                        <!-- The "value" parameter for each radio button determines what value is being passed to the browse jobs post controller method -->
+                        <ul>
+                            <li>
+                                <input type="radio" checked="checked" value="0" id="posted_30" name="DatePosted">
+                                <label for="posted_30">All</label>
+                            </li>
+                            <li>
+                                <input type="radio" value="1" id="posted_1" name="DatePosted">
+                                <label for="posted_1">24 hours</label>
+                            </li>
+                            <li>
+                                <input type="radio" value="3" id="posted_3" name="DatePosted">
+                                <label for="posted_3">3 days</label>
+                            </li>
+                            <li>
+                                <input type="radio" value="7" id="posted_7" name="DatePosted">
+                                <label for="posted_7">7 days</label>
+                            </li>
+                            <li>
+                                <input type="radio" value="30" id="posted_30" name="DatePosted">
+                                <label for="posted_30">30 days</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--/.categories-list-->
+
+
+                <br />
+
+
+
+
+
+
+                <div class="list-filter">
+                    <h4><span class="accent"><small>Job Type</small></span></h4>
+
+                    <div class="filter-date filter-content">
+                        <ul>
+
+                            <li>
+                                <input type="radio" id="employment_all" name="JobTypeName" value="All" class="emp" checked="checked">
+                                <label for="employment_all">All</label>
+                            </li>
+
+
+                            @foreach (var item in ViewBag.JobTypes)
+                            {
+                                <li>
+                                    <input type="radio" name="JobTypeName" id="employment_jtft" value=@item.JobTypeName class="emp emp-type">
+                                    <label for="employment_jtft">@item.JobTypeName</label>
+                                </li>
+                            }
+
+
+
+                        </ul>
+                    </div>
+
+                </div>
+                <!--/.locations-list-->
+
+
+                <br />
+
+
+
+
+
+                <div class="list-filter">
+                    <h4><span class="accent"><small>Salary Pay Range</small></span></h4>
+
+
+                    <div class="filter-date filter-content">
+
+
+                        <div class="clearfix"></div>
+
+
+
+
+                        <ul class="mt15">
+                            <li>
+                                <input type="radio" name="pay" id="pay_0" value="0" checked="checked">
+                                <label for="pay_0">All</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="pay" id="pay_10" value="10000">
+                                <label for="pay_10">£10,000+</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="pay" id="pay_20" value="20000">
+                                <label for="pay_20">£20,000+</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="pay" id="pay_40" value="40000">
+                                <label for="pay_40">£40,000+</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="pay" id="pay_60" value="60000">
+                                <label for="pay_60">£60,000+</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="pay" id="pay_80" value="80000">
+                                <label for="pay_80">£80,000+</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="pay" id="pay_100" value="100000">
+                                <label for="pay_100">£100,000+</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="pay" id="pay_120" value="120000">
+                                <label for="pay_120">£120,000+</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+                <!--/.list-filter-->
+
+
+                <br />
+
+
+
+
+
+                <div class="list-filter">
+
+
+
+                    <h4><span class="accent"><small>Location</small></span></h4>
+
+                    <div class="filter-date filter-content">
+
+
+                        <ul>
+
+                            <li>
+                                <input type="radio" name="LocationName" id="pay_120" value="All Locations" checked="checked">
+                                <label for="pay_120">All</label>
+                            </li>
+
+
+                            @foreach (var item in ViewBag.Locations)
+                            {
+                                <li>
+                                    <input type="radio" name="LocationName" id="pay_120" value=@item.LocationName>
+                                    <label for="pay_120">@item.LocationName</label>
+                                </li>
+
+                            }
+                        </ul>
+                    </div>
+
+                    <button type="submit" name="name" class="btn btn-primary job-main-form__button"><i class="fa fa-search"></i></button>
+
+                </div>
+                <!--/.locations-list-->
+                }
+                <div style="clear:both"></div>
+            </div>
+
+
+
+
+
+        <!--/.categories-list-->
+    </aside>
+
+
+
+
+</div>
+
+
+
+<!------------------------/.page-side-bar--------------------------->

@@ -1,0 +1,114 @@
+﻿@model IEnumerable<AllJobs.Models.Qualification>
+
+@{
+    ViewBag.Title = "My Qualifications";
+}
+
+
+@if (Model.Any())
+{
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>My Qualifications</h4>
+
+               
+                <div class="table-responsive">
+
+                    <table class="table">
+                        <tr>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.QualificationName)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Level)
+                            </th>
+
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.StartDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EndDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Grade)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.InstitutionName)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.QualificationName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Level)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StartDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Grade)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.InstitutionName)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Qualification_Id }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.Qualification_Id }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Qualification_Id })
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+
+                    <p>
+                        @Html.ActionLink("Add", "Create", null, new { @class = "btn btn-default" })
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+}
+
+
+
+
+else
+{
+    <section style="background: #fafafa;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>No Qualifications Yet</h4>
+                    <br /><br /><br /><br />
+                    <div class="text-center">
+                        You currently haven't created any Qualifications. <br />If you create Qualifications now you can add them to a CV at later date
+
+                        <br /><br /><br /><br />
+
+
+                        <p>
+                            @Html.ActionLink("Add Qualification", "Create", null, new { @class = "btn btn-primary" })
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

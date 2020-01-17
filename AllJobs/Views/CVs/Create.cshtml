@@ -1,0 +1,217 @@
+﻿@using AllJobs.Models;
+@model AllJobs.Models.CV
+
+@{
+    ViewBag.Title = "Create";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- View fo rcreating a CV. It will loopthrough all qulifications and previous jobs as options for this cv instance -->
+
+
+
+
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <h2>Create</h2>
+
+                @using (Html.BeginForm(FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <h4>CV</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Title, "Give your CV a Title to differentiate from other CVs", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Profile, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Profile, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Skills_Interests, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Skills_Interests, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Skills_Interests, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+               
+
+                        <!-- ViewBag contains all qualifications that have been created by applicant -->
+                        @if (ViewBag.QualificationOptions != null)
+                        {
+                            <br />
+                            <h6>Please Choose Qualifications for CV</h6>
+
+                            <div>
+
+
+
+                                <div class="table-responsive">
+
+                                    <table class="table">
+                                        <tr>
+                                            <th></th>
+                                            <th> Qualification </th>
+                                            <th> Level </th>
+                                            <th> Start Date </th>
+                                            <th> End Date </th>
+                                            <th> Grade </th>
+                                            <th> Institution Name </th>
+                                            <th></th>
+                                        </tr>
+
+                                        @foreach (var qualification in ViewBag.QualificationOptions)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <input id="Remember" type="checkbox" name="QualificationsCV" value=@qualification.Qualification_Id />
+                                                </td>
+                                                <td>
+                                                    @qualification.QualificationName
+                                                </td>
+                                                <td>
+                                                    @qualification.Level
+                                                </td>
+
+                                                <td>
+                                                    @qualification.StartDate
+                                                </td>
+                                                <td>
+                                                    @qualification.EndDate
+                                                </td>
+                                                <td>
+                                                    @qualification.Grade
+                                                </td>
+                                                <td>
+                                                    @qualification.InstitutionName
+                                                </td>
+
+                                            </tr>
+                                        }
+
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <p>No Qualifications to Display</p>
+                        }
+
+
+                        <!-- ViewBag contains all previous jobs that have been created by applicant -->
+                        @if (ViewBag.JobHistoryOptions != null)
+                        {
+                            <br />
+                            <h6>Please Choose Previous Jobs for CV</h6>
+
+                            <div>
+
+
+
+                                <div class="table-responsive">
+
+                                    <table class="table">
+                                        <tr>
+
+
+                                            <th>
+                                                
+                                            </th>
+                                            <th>
+                                                JobTitle
+                                            </th>
+                                            <th>
+                                                CompanyName
+                                            </th>
+                                            <th>
+                                                Description
+                                            </th>
+                                            <th>
+                                                StartDate
+                                            </th>
+                                            <th>
+                                                EndDate
+                                            </th>
+                                        </tr>
+
+                                        @foreach (var jobHistory in ViewBag.JobHistoryOptions)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <input id="Remember" type="checkbox" name="JobHistoryCV" value=@jobHistory.Id />
+                                                </td>
+
+                                                <td>
+                                                    @jobHistory.JobTitle
+                                                </td>
+                                                <td>
+                                                    @jobHistory.CompanyName
+                                                </td>
+                                                <td>
+                                                    @jobHistory.Description
+                                                </td>
+                                                <td>
+                                                    @jobHistory.StartDate
+                                                </td>
+                                                <td>
+                                                    @jobHistory.EndDate
+                                                </td>
+                                               
+                                            </tr>
+                                        }
+
+                                    </table>
+                                </div>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <p>No Previous Jobs to Display</p>
+                        }
+
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>

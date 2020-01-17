@@ -1,0 +1,315 @@
+﻿@model AllJobs.Models.Advertisement
+
+@{
+    ViewBag.Title = "PostNewJob";
+}
+
+
+<meta name="viewport" content="width=device-width" />
+<title>BraintreeASPExample</title>
+<link rel=stylesheet type=text/css href="/App_Themes/css/app.css">
+<link rel=stylesheet type=text/css href="/App_Themes/css/overrides.css">
+<link rel="icon" type="image/png" href="/App_Themes/images/favicon.png">
+<script src="/App_Themes/javascript/vendor/jquery-2.1.4.min.js"></script>
+<script src="/App_Themes/javascript/vendor/jquery.lettering-0.6.1.min.js"></script>
+<script src="/App_Themes/javascript/demo.js"></script>
+
+
+
+
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Dashboard", "MyDashboard", "Advertisements")</li>
+                        <li>Add a new position</li>
+                    </ul>
+                </div>
+                <h1 class="heading">Add a new position</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-lg-offset-1 inner-box category-content"> @*col-lg-10 col-lg-offset-1*@
+
+                @using (Html.BeginForm())
+                {
+                    <div class="col-md-10">
+
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+
+
+
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Job details</h4>
+                                    <p class="text-muted text-small">Some additional info for this screen about validity of the ads, etc. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra.     </p>
+                                    <hr>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="form-group">
+                                @Html.Label("Job Title", htmlAttributes: new { @class = "control-label col-md-2" })
+
+
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.JobTitle, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.JobTitle, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                @Html.Label("Company Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.Label("Job Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-10 ">
+                                    @Html.DropDownList("JobTypeCategoryId", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.JobTypeCategoryId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.JobSectorCategoryId, "Job Sector", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-10">
+                                    @Html.DropDownList("JobSectorCategoryId", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.JobSectorCategoryId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                @Html.Label("Min Salary", htmlAttributes: new { @class = "control-label col-md-2" })
+
+
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.MinSalary, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.MinSalary, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.Label("Max Salary", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.MaxSalary, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.MaxSalary, "", new { @class = "text-danger" })
+                                    @ViewBag.SalaryRange
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = 3 })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.Label("Job Responsibilites", htmlAttributes: new { @class = "control -label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.JobResponsibilites, new { @class = "form-control", rows = 3 })
+                                    @Html.ValidationMessageFor(model => model.JobResponsibilites, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                @Html.Label("Qualifications", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.QualificationRequired, new { @class = "form-control", rows = 3 })
+                                    @Html.ValidationMessageFor(model => model.QualificationRequired, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Technical Experience", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.TechnicalExperience, new { @class = "form-control", rows = 3 })
+                                    @Html.ValidationMessageFor(model => model.QualificationRequired, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.Label("Additional Details", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.OtherDetails, new { @class = "form-control", rows = 3 })
+                                    @Html.ValidationMessageFor(model => model.OtherDetails, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                @Html.Label("Available From", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.AvailableFrom, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AvailableFrom, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.Label("Closing Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ClosingDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ClosingDate, "", new { @class = "text-danger" })
+                                    @ViewBag.DateRange
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Website, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Website, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Website, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CoverLetterRequired, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <div class="checkbox">
+                                        @Html.EditorFor(model => model.CoverLetterRequired)
+                                        @Html.ValidationMessageFor(model => model.CoverLetterRequired, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.LocationCategoryId, "Location", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("LocationCategoryId", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.LocationCategoryId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            
+                          
+
+
+
+
+                            <!-- EmployerId set in controller to current User -->
+                            <br /> <br /> <br /> 
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Paymemnt Method</h4>
+                                    <p class="text-muted text-small">Please choose a payment method.</p>
+                                    <hr>
+
+                                    <label for="amount">
+                                        <span class="input-label">Amount Due: <span class="accent">£30</span></span>
+                                        <br /><br />
+                                        <span class="input-wrapper amount-wrapper">
+                                            <input type="hidden" id="amount" name="amount" min="1" placeholder="Amount" value="30" />
+                                        </span>
+                                    </label>
+
+
+                                    <br />
+
+
+                                    <div class="bt-drop-in-wrapper">
+                                        <div id="bt-dropin"></div>
+                                    </div>
+
+
+                                    <div>
+                                        <p class="text-muted text-small">   @ViewBag.PaymentValidation</p>
+                                    </div>
+
+
+
+
+
+                                    <!-- Useful Link for Briaintree -->
+                                    @*<div class="fit">
+                                        <a class="braintree" href="https://developers.braintreepayments.com/guides/drop-in" target="_blank">Braintree</a>
+                                    </div>*@
+                                </div>
+                            </div>
+
+
+
+
+                            <!--//////////////////////////////////////////////////////////////-->
+
+                            <br />
+                            <hr />
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10 text-righ">
+                                    <input type="submit" value="Create Job" class="btn btn-primary text-right" />
+                                </div>
+                            </div>
+
+
+                            <!-- Short Description Set in Controller-->
+                            <!-- Date Created Set in Controller -->
+                            <!-- Date Updated Set in Controller -->
+                            <!-- IsPostitionFilled set in controller to false -->
+                            <!-- EmployerId set in controller to current User -->
+
+
+
+
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="https://js.braintreegateway.com/js/braintree-2.27.0.min.js"></script>
+<script>
+
+
+
+    var checkout = new Demo({
+        formID: "payment-form"
+    });
+  var client_token = "@ViewBag.ClientToken";
+  braintree.setup(client_token, "dropin", {
+    container: "bt-dropin"
+  });
+</script>

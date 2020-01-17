@@ -1,0 +1,102 @@
+﻿@model IEnumerable<AllJobs.Models.JobHistory>
+
+@{
+    ViewBag.Title = "My Job History";
+}
+
+@if(Model.Any())
+{
+    <section style="background: #fafafa;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>My Job History</h4>
+
+
+                    <div class="table-responsive">
+                        <table class="table">
+
+                            <tr>
+
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.JobTitle)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CompanyName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StartDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.EndDate)
+                                </th>
+                                <th></th>
+                            </tr>
+                        
+                            <!-- Loop through all previous jobs and display them -->
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.JobTitle)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CompanyName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StartDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EndDate)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    </td>
+                                </tr>
+                            }
+                            </table>
+                        </div>
+                    <p>
+                        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-default" })
+                    </p>
+
+                 </div>
+            </div>
+        </div>
+    </section>
+}
+
+else
+{
+    <section style="background: #fafafa;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>No Job History Yet</h4>
+                    <br /><br /><br /><br />
+                    <div class="text-center">
+                        You currently haven't added anything to your Job History yet. <br />If you do this now you can add them to a CV at later date
+
+                        <br /><br /><br /><br />
+
+
+                        <p>
+                            @Html.ActionLink("Add Job History", "Create", null, new { @class = "btn btn-primary" })
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

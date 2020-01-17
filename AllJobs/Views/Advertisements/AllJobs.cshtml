@@ -1,0 +1,108 @@
+﻿@model IEnumerable<AllJobs.Models.AdvertisementViewModel>
+
+
+@{
+    ViewBag.Title = "AllJobs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- Only administrators and managers have the appropriate priviledges to see this view. 
+    It displays all the advertisements on the system along with edit/delete options. -->
+
+
+
+<link href="~/Content/Job2 CSS/J2-style-Copy.css" rel="stylesheet" />
+
+
+
+<section>
+    <div class="container">
+        <div class="row">
+
+        
+            <div class="col-lg-12">
+                <div class="col-sm-9 page-content col-thin-left">
+
+                    <div class="category-list">
+                        <div class="tab-box clearfix ">
+
+
+                            <div class="adds-wrapper jobs-list">
+
+
+                                @foreach (var item in Model)
+                                {
+
+
+                                    <div class="item-list job-item">
+
+                                        <div class="col-sm-10  col-xs-10  add-desc-box">
+                                            <div class="add-details jobs-item">
+                                                <h5 class="company-title ">@Html.ActionLink(item.CompanyName, "JobDetails", "Advertisements", new { Id = item.AdvertisementId }, new { @class = "company-title" })</h5>
+                                                <h4 class="job-title">
+                                                    @Html.ActionLink(item.JobTitle, "JobDetails", "Advertisements", new { Id = item.AdvertisementId }, new { @class = "company-title" })
+
+                                                <!--Request.IsAuthenticated && !User.IsInRole("Applicant") && -->
+                                                @if (item.Employer.Email.Equals(User.Identity.Name))
+                                                { <span>-</span> @item.Applicants.Count() <span>Applicants</span> }
+                                            </h4>
+
+
+                                            <span class="info-row">
+                                                <span class="item-location">
+                                                    <i class="fa fa-map-marker"></i> @item.Location.LocationName /
+                                                </span>
+                                                <span class="date">
+                                                    <i class="icon-clock"></i> @item.JobType.JobTypeName /
+                                                </span>
+                                                <span class="salary">
+                                                    <i class="icon-money"></i> @item.MaxSalary per Annum /
+                                                </span>
+                                                @if (item.IsPublic)
+                                                {
+                                                    <span class="salary">
+                                                        <i class="icon-money"></i> Ad is Public
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="salary">
+                                                        <i class="icon-money"></i> Ad is Not Publc
+                                                    </span>
+                                                }
+
+                                            </span>
+
+                                            <div class="jobs-desc">
+                                                @item.ShortDescription
+                                            </div>
+
+
+                                            @if (User.IsInRole("Administrator"))
+                                            {
+                                                @Html.ActionLink("Edit", "Edit", "Advertisements", new { AdvertisementId = item.AdvertisementId }, new { @class = "btn btn-default" })
+                                                <span></span>
+                                                @Html.ActionLink("Delete", "Delete", "Advertisements", new { AdvertisementId = item.AdvertisementId }, new { @class = "btn btn-default" })
+                                            }
+
+
+                                        </div>
+                                    </div>
+                                    <!--/.add-desc-box-->
+                                    <!--/.add-desc-box-->
+                                </div>
+                            <!--/.job-item-->
+
+
+                                }
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+</section>

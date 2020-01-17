@@ -1,0 +1,143 @@
+/* your styles go here */
+
+
+
+
+.jobs-details-info ul {
+    margin-left: 20px;
+}
+
+.jobs-details-info ul li {
+    list-style: outside none disc;
+    margin-left: 14px;
+
+}
+
+.job-summery ul li {
+    margin-bottom: 10px;
+
+}
+
+.company-logo-thumb {
+    display: block;
+}
+
+.mobile-filter-bar {
+    background-color: #fafafa;
+    border-bottom: 1px solid #ddd;
+    height: 44px;
+    line-height: 44px;
+    font-family: Roboto Condensed, Helvetica Neue, Helvetica, sans-serif;
+}
+
+.mobile-filter-bar > ul > li {
+    border-right: 1px solid #ddd;
+    padding-right: 15px;
+    padding-left: 15px;
+    text-transform: uppercase;
+}
+
+.mobile-filter-bar > ul > li:first-child {
+    padding-left: 0;
+}
+
+@media screen and (min-width: 768px) {
+    .mobile-filter-sidebar {
+        left: 0 !important;
+    }
+
+    .mobile-filter-bar, .closeFilter {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .jobs-s-tag {
+        margin-bottom: 4px;
+    }
+
+    .hide-xs {
+        display: none;
+    }
+
+    .btn-block-xs {
+        display: block;
+        width: 100%;
+    }
+
+    /* Mobile Filter */
+    .mobile-filter-sidebar .inner-box {
+        margin-bottom: 0;
+        border-radius: 0 !important;
+    }
+
+    .closeFilter {
+        cursor: pointer;
+        display: block;
+        font-size: 16px;
+        height: 30px;
+        line-height: 30px;
+        padding: 3px;
+        position: absolute;
+        right: 10px;
+        text-align: center;
+        top: 0;
+        width: 30px;
+        z-index: 2147483647;
+    }
+
+    .page-sidebar.mobile-filter-sidebar {
+        height: 100%;
+        overflow: auto;
+        padding: 0;
+        position: fixed;
+        top: 0;
+        width: 250px;
+        z-index: 1110;
+        left: -251px;
+    }
+
+    .page-sidebar.mobile-filter-sidebar aside {
+    }
+
+    .menu-overly-mask {
+        background-color: #000;
+        height: 100%;
+        left: 0;
+        opacity: 0.3;
+        position: fixed;
+        top: 0;
+        transition: all 0.2s linear 0s;
+        -webkit-transition: all 0.2s linear 0s;
+        -o-transition: all 0.2s linear 0s;
+        visibility: hidden;
+        backface-visibility: hidden;
+        width: 100%;
+        z-index: 1100;
+    }
+
+    .menu-overly-mask.is-visible {
+        cursor: pointer;
+        opacity: 0.5;
+        visibility: visible;
+        backface-visibility: visible;
+    }
+
+}
+
+
+
+/* TERMS & CONDITION */
+
+.container-content {
+    display: block;
+    clear: both;
+}
+
+ul.list-number li {
+    list-style: unset none decimal;
+}
+
+ul.list-number {
+    margin-left: 30px;
+}

@@ -1,0 +1,85 @@
+﻿@using AllJobs.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- This login view will work for any user type -->
+
+
+
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        <li>Login</li>
+                    </ul>
+                </div>
+                <h1 class="heading">Sign In</h1>
+                <p class="lead text-center">If you haven't alreadyregistered please feel free to <span class="accent">@Html.ActionLink("Register", "Register", "Account")</span> an account.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="loginCenter">
+    <div class="container" >
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box" id="loginCenter">
+                    <h3 class="heading">Login</h3>
+                    <p class="text-muted">All your information is kept private. We won't display any of your information without your permission.</p>
+                   
+                    
+
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <hr />
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(m => m.RememberMe)
+                                    @Html.LabelFor(m => m.RememberMe)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                
+                                <input type="submit" class="btn btn-default" value="Login" />
+
+                                @*@Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })*@
+
+
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

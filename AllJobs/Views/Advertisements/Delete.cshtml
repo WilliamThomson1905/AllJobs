@@ -1,0 +1,212 @@
+﻿@model AllJobs.Models.Advertisement
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- This view allws for the deletion of advertisements -->
+
+
+<section>
+    <div class="container">
+
+
+        <h4>Are you sure you want to delete this?</h4>
+        <div>
+
+
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Employer.Forename)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Employer.Forename)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.JobTitle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.JobTitle)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CompanyName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CompanyName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.JobTypeCategoryId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.JobTypeCategoryId)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.JobSectorCategoryId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.JobSectorCategoryId)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.MinSalary)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MinSalary)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.MaxSalary)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MaxSalary)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ShortDescription)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ShortDescription)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.JobResponsibilites)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.JobResponsibilites)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.QualificationRequired)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.QualificationRequired)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.TechnicalExperience)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TechnicalExperience)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.OtherDetails)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.OtherDetails)
+                </dd>
+
+                @*<dt>
+                    @Html.DisplayNameFor(model => model.CVRequired)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CVRequired)
+                </dd>*@
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.AvailableFrom)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.AvailableFrom)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ClosingDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ClosingDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.DateCreated)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DateCreated)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.UpdatedAt)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UpdatedAt)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Website)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Website)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsPublic)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsPublic)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsPositionFilled)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsPositionFilled)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Location.LocationName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Location.LocationName)
+                </dd>
+
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" onclick = "return confirm('Are you sure you wish to Delete this Advertisement? You cannot retrieve this advertisement once it has been deleted!');" /> 
+                    @Html.ActionLink("Back to List", "MyDashboard", "Advertisements", new { @class = "btn btn-default" })
+                </div>
+            }
+        </div>
+    </div>
+</section>

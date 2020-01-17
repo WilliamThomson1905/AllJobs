@@ -1,0 +1,337 @@
+﻿@using AllJobs.Models
+@model AllJobs.Models.ApplicationViewModel
+
+@{
+    ViewBag.Title = "Apply To Job";
+}
+
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- This view is used by applicants to apply to a job vacancy. It will present all the CVs the current user has created -->
+
+<style>
+
+
+    input[type=radio   ]:not(old)
+    {
+      width     : 2em;
+      margin    : 0;
+      padding   : 0;
+      font-size : 1em;
+      opacity   : 0;
+    }
+
+    input[type=radio   ]:not(old) + label{
+      display      : inline-block;
+      margin-left  : -2em;
+      line-height  : 1.5em;
+    }
+
+    input[type=radio   ]:not(old) + label > span{
+      display          : inline-block;
+      width            : 0.875em;
+      height           : 0.875em;
+      margin           : 0.25em 0.5em 0.25em 0.25em;
+      border           : 0.0625em solid rgb(192,192,192);
+      border-radius    : 0.25em;
+      background       : rgb(224,224,224);
+      background-image :    -moz-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+      background-image :     -ms-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+      background-image :      -o-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+      background-image : -webkit-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+      background-image :         linear-gradient(rgb(240,240,240),rgb(224,224,224));
+      vertical-align   : bottom;
+    }
+
+    input[type=radio]:not(old):checked + label > span > span{
+      display          : block;
+      width            : 0.5em;
+      height           : 0.5em;
+      margin           : 0.125em;
+      border           : 0.0625em solid rgb(115,153,77);
+      border-radius    : 0.125em;
+      background       : rgb(153,204,102);
+      background-image :    -moz-linear-gradient(rgb(179,217,140),rgb(153,204,102));
+      background-image :     -ms-linear-gradient(rgb(179,217,140),rgb(153,204,102));
+      background-image :      -o-linear-gradient(rgb(179,217,140),rgb(153,204,102));
+      background-image : -webkit-linear-gradient(rgb(179,217,140),rgb(153,204,102));
+      background-image :         linear-gradient(rgb(179,217,140),rgb(153,204,102));
+    }
+</style>
+
+<script src="http://malsup.github.com/jquery.form.js"></script>
+
+
+
+
+
+
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li> - Apply To - </li>
+                    </ul>
+                </div>
+                <h1 class="heading">@Model.JobTitle </h1>
+                <p class="lead text-center">@Model.Description</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+          
+                <br />
+
+                <h4 class="heading">Please Provide a Resume</h4>
+
+
+
+
+
+                <div class="tabs">
+                    <ul class="nav nav-tabs nav-justified">
+                        <li class="active"><a href="#tab5-1" data-toggle="tab">Select a Resume</a></li>
+                        <li><a href="#tab5-3" data-toggle="tab">Upload a Resume</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab5-1" class="tab-pane fade in active">
+
+                            <div class="filter-date filter-content">
+
+                                <br />
+
+                                @using (Html.BeginForm("ApplyToJob", "Advertisements", FormMethod.Post))
+                                {
+
+                                    <!-- If no CVs have been created or uploaded -->
+                                    if (Model.CVs.Count() == 0 && Model.CV_FileUpload == "")
+                                    {
+                                        <div class="text-center">
+                                            <p>No Resumes Created at the Moment!</p>
+                                            <p>You cannot apply to a job until you <span class="accent">@Html.RouteLink("Create", "MyCVs", new { @class = "btn btn-default" })</span> a CV or upload one.</p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <!-- Display all CVs that have been create or uploaded -->
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <tr>
+                                                    <th> CV </th>
+                                                    <th></th>
+                                                </tr>
+
+                                                @{int i = 1;}
+                                                <!-- Display all CVs - making the first option "checked" -->
+                                                @foreach (var cv in Model.CVs)
+                                                {
+                                                    
+                                                    if (i != 1)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <input id="option" type="radio" name="optionCV" value="@cv.CV_Id">
+                                                                <label for="option"><span><span></span></span>@cv.Title</label>
+                                                            </td>
+
+                                                            <td>
+
+
+                                                                @Html.RouteLink("View CV", "CV_Details", new { id = cv.CV_Id }, new { target = "_blank" })
+
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <input id="option" type="radio" name="optionCV" value="@cv.CV_Id" checked="checked">
+                                                                <label for="option"><span><span></span></span>@cv.Title</label>
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.RouteLink("View CV", "CV_Details", new { id = cv.CV_Id }, new { target = "_blank" })
+                                                            </td>
+                                                        </tr>
+
+                                                    }
+                                                
+                                                }
+
+                                                <!-- CV_FileUpload is the cv the applicant has chosen -->
+                                                @if (!Model.CV_FileUpload.Equals(""))
+                                                {
+                                                    if (i == 1)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <!-- Set the Uploaded CV to having a value of "-1".  -->
+                                                                <input id="option2" type="radio" name="optionCV" value="-1" checked="checked"> <!--Model.CV_FileUpload-->
+                                                                <label for="option2"><span><span></span></span>Uploaded CV</label>
+                                                            </td>
+
+                                                            <td>
+                                                                <label for="option2"><span><span></span></span><img src=@Model.CV_FileUpload.Substring(81) width="125" height="175"></label>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <!-- Set the Uploaded CV to having a value of "-1".  -->
+                                                                <input id="option2" type="radio" name="optionCV" value="-1"> <!--Model.CV_FileUpload-->
+                                                                <label for="option2"><span><span></span></span>Uploaded CV</label>
+                                                            </td>
+
+                                                            <td>
+                                                                <label for="option2"><span><span></span></span><img src=@Model.CV_FileUpload.Substring(81) width="125" height="175"></label>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+
+                                            </table>
+
+                                        </div>
+
+                                    }
+
+
+
+
+                                    <div class="filter-date filter-content">
+
+
+
+                                        <!-- Declare hidden values for each of the folowing -->
+                                        <input type="hidden" value=@Model.systemEmail id="system" name="systemEmail" />
+                                        <input type="hidden" value="@Model.recruiterEmail" id="empEmail" name="employerEmail" />
+                                        <input type="hidden" value="@Model.AdvertisementId" name="id" />
+                                        <input type="hidden" value="@Model.applicant.Email" name="applicantEmail" />
+
+                                    </div>
+
+
+                                    <br /> <br />
+
+                                    if (Model.CoverLetterRequired)
+                                    {
+                                        <div class="row">
+                                            <br />
+
+                                            <h4 class="heading">Please Provide a Cover Letter</h4>
+                                            @Html.TextAreaFor(model => model.coverLetter, new { name = "coverLetter",  @class = "form-control", rows = 10, placeholder = "The recuiter requires that you provide a Cover Letter. " })
+                                            <span class="accent">@ViewBag.CoverLetterError</span>
+                                            <br />
+                                        </div>
+                                        
+                                    }
+                                    else
+                                    {
+                                        <input type="hidden" value="@Model.coverLetter" name="coverLetter" />
+
+                                    }
+
+                                    <br /><br />
+                                    <div class="col-md-2 col-sm-2">
+                                        <div class="col-sm-12 text-center">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Apply Now</button>
+
+                                        </div>
+                                    </div>
+
+
+                                    }
+
+
+                            </div>
+
+
+
+                           
+                        </div>
+                     
+
+                        <div id="tab5-3" class="tab-pane fade">
+                            
+                            @if (User.IsInRole("Applicant"))
+                            {
+                                if (Model.CV_FileUpload.Equals(""))
+                                {
+
+                                    using (Ajax.BeginForm("AsyncUpload", "Advertisements", new AjaxOptions() { HttpMethod = "POST" }, new { enctype = "multipart/form-data" }))
+                                    {
+                                        <div class="text-center">
+
+                                            @Html.AntiForgeryToken()
+                                            <input type="file" name="files" id="fu1" />
+                                            <input type="hidden" name="advertisementId" value=@Model.AdvertisementId />
+
+                                            <br />
+                                            <input type="submit" value="Upload File" class="btn btn-default"/>
+                                        </div>
+                                    }
+
+                                   
+
+
+                                }
+                                else
+                                {
+                                    <div class="text-center">
+                                        <p>You Have Uploaded a CV!</p>
+                                        <input id="option" type="radio" name="field" value="option">
+                                        <label for="option"><img src=@Model.CV_FileUpload.Substring(81) width="125" height="175"></label>
+
+                                    </div>
+
+                                    using (Ajax.BeginForm("AsyncUpload", "Advertisements", new AjaxOptions() { HttpMethod = "POST" }, new { enctype = "multipart/form-data" }))
+                                    {
+                                        <div class="text-center">
+
+                                            @Html.AntiForgeryToken()
+                                            <input type="file" name="files" id="fu1" />
+                                            <input type="hidden" name="advertisementId" value=@Model.AdvertisementId />
+
+                                            <br />
+                                            <input type="submit" value="Change CV" class="btn btn-default" />
+                                        </div>
+                                    }
+
+
+                                }
+                            }
+
+
+                        </div>
+
+                    </div>
+                    <!-- /.tab-content-->
+                </div>
+                <!-- /.tabs-->
+
+
+                <div class="filter-date filter-content">
+
+                    <input type="hidden" value=@Model.systemEmail id="system" name="systemEmail" />
+                    <input type="hidden" value="@Model.recruiterEmail" id="empEmail" name="employerEmail" />
+                    <input type="hidden" value="@Model.AdvertisementId" name="id" />
+                    <input type="hidden" value="@Model.applicant.Email" name="applicantEmail" />
+
+             
+                </div>           
+
+            </div>
+        </div>
+    </div>
+</section>
+

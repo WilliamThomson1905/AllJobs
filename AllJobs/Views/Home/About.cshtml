@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+
+
+
+<section style="background: #fafafa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>About us</li>
+                    </ul>
+                </div>
+                <h1 class="heading">About us</h1>
+                <p class="lead text-center">As the world's #1 job site, with over 200 million unique visitors every month from over 60 different countries, 
+                    AllJobs has become the catalyst for putting the world to work. AllJobs is intensely passionate about delivering the right fit for every hire. 
+                    AllJobs helps companies of all sizes hire the best talent and offers the best opportunity for jobseekers to get hired.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+               
+                
+                <br/>
+                <h4>Our Company</h4>
+                <br/>
+                
+                <blockquote>
+                    <p> All Jobs is the #1 job site worldwide, with over 200 million unique visitors per month. 
+                    All Jobs is available in more than 60 countries and 28 languages, covering 94% of global GDP.
+                    Since 2004, All Jobs has given jobseekers free access to millions of jobs from thousands of company websites and job boards. 
+                    As the leading pay-for-performance recruitment advertising network, All Jobs drives millions of targeted applicants to jobs in every 
+                    field and is the most cost-effective source of candidates for thousands of companies.
+                    Founded by Paul Forster and Rony Kahan, All Jobs is a subsidiary of Recruit Holdings Co., Ltd. 
+                    In the US, All Jobs has offices in Austin, New York, San Francisco, San Mateo, Seattle, and Stamford. 
+                    Outside of the US, All Jobs has offices located in Amsterdam, Dublin, Düsseldorf, Hyderabad, London, Paris, Sydney, Tokyo, and Toronto. 
+                    For more information about All Jobs, see our blog, press releases or contact us.</p>
+                </blockquote>
+
+               
+            </div>
+        </div>
+    </div>
+</section>
+<section style="background-image: url('../img/startup.jpg')" class="section-divider">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <p>Start searching for your new job now! @Html.RouteLink("Browse Jobs", "BrowseJobs", new { SearchFilter = "Search by Profession", DatePosted = 0, JobTypeName = "All", pay = 0, LocationName = "All Locations" }, new { @class = "btn btn-primary" })</p>
+            </div>
+        </div>
+    </div>
+</section>
+

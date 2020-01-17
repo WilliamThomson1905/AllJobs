@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Confirm Email";
+}
+
+<!-- William Thomson -->
+<!-- 28/07/2017 -->
+<!-- If a user has not confirmed their email address yet, they will be preseneted with this view whenever they attempt to login. -->
+
+ 
+<section>
+    <div class="container">
+        <div class="row">
+
+
+            <div class="col-md-6">
+                <div class="box">
+                    <h2>@ViewBag.Title.</h2>
+                    <div>
+                        <p>
+                            Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                        </p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
